@@ -27,21 +27,19 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import ThemeColors from './src/assets/colors';
+import Icon from 'react-native-vector-icons/Feather';
+
+Icon.loadFont();
+
 const Section: React.FC<{
   title: string;
 }> = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
+      <Text style={[styles.sectionTitle]}>{title}</Text>
+      <Icon name="alert-octagon" size={30} color="#4F8EF7" />
       <Text
         style={[
           styles.sectionDescription,
@@ -100,7 +98,9 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: 'Montserrat-Bold',
+    color: ThemeColors.primary,
   },
   sectionDescription: {
     marginTop: 8,
