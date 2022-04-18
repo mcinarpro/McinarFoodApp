@@ -6,6 +6,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -15,7 +16,7 @@ import Colors from '../assets/colors';
 import categories from '../assets/data/categories';
 import popular from '../assets/data/popular';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}: any) => {
   const renderCategoryItem = ({item}: any) => {
     return (
       <View
@@ -93,52 +94,61 @@ const HomeScreen = () => {
         <View style={styles.popular}>
           <Text style={styles.popularTitle}>Popular</Text>
           {popular.map(item => (
-            <View
+            <TouchableOpacity
               key={item.id}
-              style={[
-                styles.popularCard,
-                {
-                  marginTop: item.id === '1' ? 10 : 20,
-                },
-              ]}>
-              <View>
+              onPress={() =>
+                navigation.navigate('Details', {
+                  item: item,
+                })
+              }>
+              <View
+                style={[
+                  styles.popularCard,
+                  {
+                    marginTop: item.id === '1' ? 10 : 20,
+                  },
+                ]}>
                 <View>
-                  <View style={styles.popularTop}>
-                    <MaterialCommunityIcons
-                      name="crown"
-                      size={12}
-                      color={Colors.primary}
-                    />
-                    <Text style={styles.popularTopText}>top of the week</Text>
+                  <View>
+                    <View style={styles.popularTop}>
+                      <MaterialCommunityIcons
+                        name="crown"
+                        size={12}
+                        color={Colors.primary}
+                      />
+                      <Text style={styles.popularTopText}>top of the week</Text>
+                    </View>
+
+                    <View style={styles.popularTitles}>
+                      <Text style={styles.popularTitlesTitle}>
+                        {item.title}
+                      </Text>
+                      <Text style={styles.popularTitlesWeight}>
+                        Weight {item.weight}
+                      </Text>
+                    </View>
                   </View>
 
-                  <View style={styles.popularTitles}>
-                    <Text style={styles.popularTitlesTitle}>{item.title}</Text>
-                    <Text style={styles.popularTitlesWeight}>
-                      Weight {item.weight}
-                    </Text>
+                  <View style={styles.popularBottom}>
+                    <View style={styles.addButton}>
+                      <Feather name="plus" size={10} color={Colors.textDark} />
+                    </View>
+                    <View style={styles.rating}>
+                      <MaterialCommunityIcons
+                        name="star"
+                        size={10}
+                        color={Colors.textDark}
+                      />
+                      <Text style={styles.ratingtext}>{item.rating}</Text>
+                    </View>
                   </View>
                 </View>
 
-                <View style={styles.popularBottom}>
-                  <View style={styles.addButton}>
-                    <Feather name="plus" size={10} color={Colors.textDark} />
-                  </View>
-                  <View style={styles.rating}>
-                    <MaterialCommunityIcons
-                      name="star"
-                      size={10}
-                      color={Colors.textDark}
-                    />
-                    <Text style={styles.ratingtext}>{item.rating}</Text>
-                  </View>
+                <View style={styles.popularRight}>
+                  <Image style={styles.popularRightImage} source={item.image} />
                 </View>
               </View>
-
-              <View style={styles.popularRight}>
-                <Image style={styles.popularRightImage} source={item.image} />
-              </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
